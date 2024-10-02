@@ -1,16 +1,17 @@
-package com.example.movies
+package com.example.movies.activity
 
 import android.content.Intent
 import android.os.Bundle
-import android.widget.ArrayAdapter
-import android.widget.ListView
 import android.widget.TextView
-import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
-import androidx.annotation.IntegerRes
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import com.example.movies.R
+import com.example.movies.model.User
+import com.example.movies.adapter.UserAdapter
 import com.google.firebase.Firebase
 import com.google.firebase.firestore.firestore
 
@@ -24,33 +25,34 @@ class RecordsActivity : AppCompatActivity() {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
         }
+        val users = setData { retrievedUsers ->
+            val recyclerView = findViewById<RecyclerView>(R.id.records)
+            recyclerView.adapter = UserAdapter(retrievedUsers)
+            recyclerView.layoutManager = LinearLayoutManager(this)
+        }
 
-        val users: ArrayList<User> = setData()
-        val listView: ListView = findViewById(R.id.records)
-        val userAdapter = UserAdapter(this, android.R.layout.simple_list_item_1, users)
-
-        listView.adapter = userAdapter
+        val user: User? =intent.getParcelableExtra("user")
 
         val back: TextView = findViewById(R.id.back)
         back.setOnClickListener {
             val intent = Intent(this, MainMenuActivity::class.java)
+            intent.putExtra("user", user)
             startActivity(intent)
         }
     }
 
-    private fun setData(): ArrayList<User> {
+    private fun setData(callback: (ArrayList<User>) -> Unit) {
         val users = ArrayList<User>()
-        val user = User("alex", 10)
         val db = Firebase.firestore
         db.collection("users").get().addOnSuccessListener { result ->
             for (document in result) {
-                user.name = document.getString("name").toString()
-                val record = Integer.parseInt(document.getString("record").toString())
-                user.record = record
-                users.add(user)
+                users.add(
+                    User(document.getString("name").toString(),
+                    document.getString("record").toString().toInt())
+                )
             }
+            users.sortWith { u1, u2 -> u2.record.compareTo(u1.record) }
+            callback(users)
         }
-
-        return users
     }
 }

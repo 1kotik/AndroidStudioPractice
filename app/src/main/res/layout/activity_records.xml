@@ -5,7 +5,7 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".RecordsActivity">
+    tools:context=".activity.RecordsActivity">
 
     <TextView
         android:id="@+id/textView"
@@ -20,15 +20,6 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <ListView
-        android:id="@+id/records"
-        android:layout_width="321dp"
-        android:layout_height="321dp"
-        android:layout_marginStart="44dp"
-        android:layout_marginTop="204dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
     <Button
         android:id="@+id/back"
         android:layout_width="82dp"
@@ -38,6 +29,15 @@
         android:fontFamily="@font/alata"
         android:lineSpacingExtra="34sp"
         android:text="Back"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/records"
+        android:layout_width="381dp"
+        android:layout_height="386dp"
+        android:layout_marginTop="208dp"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 

@@ -5,14 +5,16 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainMenuActivity">
+    tools:context=".activity.MainMenuActivity">
 
     <LinearLayout
         android:layout_width="241dp"
         android:layout_height="451dp"
         android:layout_marginStart="84dp"
         android:layout_marginTop="124dp"
+        android:layout_marginEnd="84dp"
         android:orientation="vertical"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
@@ -29,15 +31,15 @@
             android:id="@+id/play"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Играть"
-            android:layout_marginTop="50dp"/>
+            android:layout_marginTop="50dp"
+            android:text="Играть" />
 
         <Button
             android:id="@+id/records"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Рекорды"
-            android:layout_marginTop="10dp"/>
+            android:layout_marginTop="10dp"
+            android:text="Рекорды" />
 
         <Button
             android:id="@+id/exit"

@@ -5,20 +5,28 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".GameActivity">
+    android:background="#FF9A80"
+    tools:context=".activity.GameActivity">
+
     <LinearLayout
+        android:id="@+id/layout"
         android:layout_width="405dp"
         android:layout_height="725dp"
         android:layout_marginStart="4dp"
         android:layout_marginTop="4dp"
+        android:layout_marginEnd="4dp"
+        android:layout_marginBottom="4dp"
+        android:background="#FF9A80"
         android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
         <TextView
-            android:id="@+id/points"
+            android:id="@+id/score"
             android:layout_width="match_parent"
-            android:layout_height="114dp"
+            android:layout_height="115dp"
             android:layout_marginLeft="50dp"
             android:layout_marginRight="50dp"
             android:fontFamily="@font/alata"
@@ -27,25 +35,51 @@
             android:textSize="60sp" />
 
         <TextView
-            android:id="@+id/textView4"
+            android:id="@+id/lives"
             android:layout_width="match_parent"
-            android:layout_height="255dp"
+            android:layout_height="48dp"
+            android:fontFamily="@font/alata"
+            android:text="Lives: 3"
+            android:textSize="24sp" />
+
+        <TextView
+            android:id="@+id/question"
+            android:layout_width="match_parent"
+            android:layout_height="233dp"
             android:layout_marginTop="20dp"
             android:fontFamily="@font/alata"
             android:textAlignment="center"
             android:textAllCaps="false"
-            android:textSize="50sp" />
+            android:textSize="34sp" />
+
+        <ImageView
+            android:id="@+id/imageView"
+            android:layout_width="match_parent"
+            android:layout_height="150dp"
+            android:adjustViewBounds="true"
+            android:cropToPadding="true"
+            app:srcCompat="@drawable/pms_res" />
 
         <Button
-            android:id="@+id/button"
+            android:id="@+id/exit"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="30dp"
-            android:layout_marginTop="150dp"
+            android:layout_marginTop="30dp"
             android:layout_marginRight="30dp"
             android:backgroundTint="#E91E63"
             android:fontFamily="@font/alata"
             android:text="Quit"
             android:textSize="34sp" />
+
+        <TextView
+            android:id="@+id/textView3"
+            android:layout_width="match_parent"
+            android:layout_height="63dp"
+            android:fontFamily="@font/alata"
+            android:text="Long press to skip question"
+            android:textAlignment="center"
+            android:textSize="24sp" />
+
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

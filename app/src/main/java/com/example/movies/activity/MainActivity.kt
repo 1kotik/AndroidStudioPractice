@@ -1,4 +1,4 @@
-package com.example.movies
+package com.example.movies.activity
 
 import android.content.Intent
 import android.os.Bundle
@@ -9,6 +9,8 @@ import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import com.example.movies.R
+import com.example.movies.model.User
 import com.google.firebase.Firebase
 import com.google.firebase.firestore.firestore
 
@@ -43,10 +45,23 @@ class MainActivity : AppCompatActivity() {
                     for (document in result) {
                         if (document.getString("name") == name.text.toString()
                             && document.getString("password") == password.text.toString()
-                        ){
-                            startActivity(Intent(this,MainMenuActivity::class.java))
+                        ) {
+                            val intent = Intent(this, MainMenuActivity::class.java)
+                            val user = User(
+                                document.getString("name").toString(),
+                                document.getString("record").toString().toInt()
+                            )
+                            intent.putExtra("user", user)
+                            startActivity(intent)
+                            return@addOnSuccessListener;
+                        } else if (document.getString("name") == name.text.toString()
+                            && document.getString("password") != password.text.toString()
+                        ) {
+                            Toast.makeText(this, "Incorrect password", Toast.LENGTH_LONG).show()
+                            return@addOnSuccessListener;
                         }
                     }
+                    Toast.makeText(this, "This user does not exist!", Toast.LENGTH_LONG).show()
                 }.addOnFailureListener {
                     Toast.makeText(this, "Something went wrong!", Toast.LENGTH_LONG).show()
                 }

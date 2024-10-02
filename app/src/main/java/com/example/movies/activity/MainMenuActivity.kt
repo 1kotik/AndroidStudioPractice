@@ -1,6 +1,5 @@
-package com.example.movies
+package com.example.movies.activity
 
-import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.widget.TextView
@@ -8,6 +7,8 @@ import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import com.example.movies.R
+import com.example.movies.model.User
 
 class MainMenuActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -19,17 +20,18 @@ class MainMenuActivity : AppCompatActivity() {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
         }
-        //var sp=getSharedPreferences("PC", Context.MODE_PRIVATE)
-        //sp.edit().putString("T","9").commit()
+        val user: User? =intent.getParcelableExtra("user")
         val play: TextView = findViewById(R.id.play)
         play.setOnClickListener {
             val intent = Intent(this, GameActivity::class.java)
+            intent.putExtra("user", user)
             startActivity(intent)
         }
 
         val records: TextView = findViewById(R.id.records)
         records.setOnClickListener {
             val intent = Intent(this, RecordsActivity::class.java)
+            intent.putExtra("user", user)
             startActivity(intent)
         }
 
