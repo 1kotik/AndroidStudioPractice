@@ -29,17 +29,18 @@
             android:layout_height="115dp"
             android:layout_marginLeft="50dp"
             android:layout_marginRight="50dp"
-            android:fontFamily="@font/alata"
+            android:fontFamily="sans-serif-medium"
             android:text="0"
             android:textAlignment="center"
             android:textSize="60sp" />
 
         <TextView
             android:id="@+id/lives"
-            android:layout_width="match_parent"
+            android:layout_width="298dp"
             android:layout_height="48dp"
-            android:fontFamily="@font/alata"
-            android:text="Lives: 3"
+            android:layout_marginLeft="15dp"
+            android:fontFamily="sans-serif-medium"
+            android:text="Жизни: 3"
             android:textSize="24sp" />
 
         <TextView
@@ -47,7 +48,7 @@
             android:layout_width="match_parent"
             android:layout_height="233dp"
             android:layout_marginTop="20dp"
-            android:fontFamily="@font/alata"
+            android:fontFamily="sans-serif-medium"
             android:textAlignment="center"
             android:textAllCaps="false"
             android:textSize="34sp" />
@@ -55,31 +56,31 @@
         <ImageView
             android:id="@+id/imageView"
             android:layout_width="match_parent"
-            android:layout_height="150dp"
-            android:adjustViewBounds="true"
-            android:cropToPadding="true"
-            app:srcCompat="@drawable/pms_res" />
+            android:layout_height="wrap_content"
+            android:src="@drawable/pms_res" />
 
         <Button
             android:id="@+id/exit"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="30dp"
-            android:layout_marginTop="30dp"
+
             android:layout_marginRight="30dp"
             android:backgroundTint="#E91E63"
-            android:fontFamily="@font/alata"
-            android:text="Quit"
+            android:fontFamily="sans-serif-medium"
+            android:text="Выйти"
             android:textSize="34sp" />
 
         <TextView
             android:id="@+id/textView3"
             android:layout_width="match_parent"
             android:layout_height="63dp"
-            android:fontFamily="@font/alata"
-            android:text="Long press to skip question"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"
+            android:fontFamily="sans-serif-medium"
+            android:text="Долгое нажатие, чтобы пропустить вопрос (-1 очко, -1 жизнь)"
             android:textAlignment="center"
-            android:textSize="24sp" />
+            android:textSize="20sp" />
 
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

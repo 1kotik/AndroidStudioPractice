@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#FF9A80"
+    tools:context=".activity.GameActivity">
+
+
+        <TextView
+            android:id="@+id/score"
+            android:layout_width="135dp"
+            android:layout_height="83dp"
+            android:layout_marginEnd="60dp"
+            android:layout_marginBottom="116dp"
+            android:fontFamily="sans-serif-medium"
+            android:text="0"
+            android:textAlignment="viewStart"
+            android:textSize="60sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent" />
+
+        <TextView
+            android:id="@+id/lives"
+            android:layout_width="198dp"
+            android:layout_height="52dp"
+            android:layout_marginBottom="64dp"
+            android:fontFamily="sans-serif-medium"
+            android:text="Жизни: 3"
+            android:textSize="24sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent" />
+
+        <TextView
+            android:id="@+id/question"
+            android:layout_width="609dp"
+            android:layout_height="178dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="1dp"
+            android:fontFamily="sans-serif-medium"
+            android:textAlignment="center"
+            android:textAllCaps="false"
+            android:textSize="34sp"
+            app:layout_constraintBottom_toTopOf="@+id/imageView"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.502"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageView
+            android:id="@+id/imageView"
+            android:layout_width="708dp"
+            android:layout_height="160dp"
+            android:layout_marginTop="1dp"
+            android:layout_marginEnd="12dp"
+            android:layout_marginBottom="48dp"
+            android:src="@drawable/pms_res"
+            app:layout_constraintBottom_toBottomOf="@+id/textView3"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.581"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/question" />
+
+        <Button
+            android:id="@+id/exit"
+            android:layout_width="164dp"
+            android:layout_height="83dp"
+
+            android:layout_marginStart="16dp"
+            android:layout_marginBottom="100dp"
+            android:backgroundTint="#E91E63"
+            android:fontFamily="sans-serif-medium"
+            android:text="Выйти"
+            android:textSize="34sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <TextView
+            android:id="@+id/textView3"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:fontFamily="sans-serif-medium"
+            android:text="Долгое нажатие, чтобы пропустить вопрос (-1 очко, -1 жизнь)"
+            android:textAlignment="center"
+            android:textSize="20sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

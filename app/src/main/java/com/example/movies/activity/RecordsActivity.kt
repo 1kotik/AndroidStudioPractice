@@ -1,6 +1,7 @@
 package com.example.movies.activity
 
 import android.content.Intent
+import android.content.pm.ActivityInfo
 import android.os.Bundle
 import android.widget.TextView
 import androidx.activity.enableEdgeToEdge
@@ -25,6 +26,7 @@ class RecordsActivity : AppCompatActivity() {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
         }
+        //setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         val users = setData { retrievedUsers ->
             val recyclerView = findViewById<RecyclerView>(R.id.records)
             recyclerView.adapter = UserAdapter(retrievedUsers)

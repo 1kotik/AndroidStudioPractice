@@ -1,6 +1,7 @@
 package com.example.movies.activity
 
 import android.content.Intent
+import android.content.pm.ActivityInfo
 import android.os.Bundle
 import android.widget.Button
 import android.widget.TextView
@@ -29,6 +30,7 @@ class SignUpActivity : AppCompatActivity() {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
         }
+        //setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         //var sp=getSharedPreferences("PC", Context.MODE_PRIVATE).edit()
         val signIn: TextView = findViewById(R.id.sign_in)
         signIn.setOnClickListener {

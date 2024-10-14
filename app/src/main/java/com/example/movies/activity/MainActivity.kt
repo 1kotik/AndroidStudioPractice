@@ -1,6 +1,7 @@
 package com.example.movies.activity
 
 import android.content.Intent
+import android.content.pm.ActivityInfo
 import android.os.Bundle
 import android.widget.Button
 import android.widget.TextView
@@ -24,6 +25,7 @@ class MainActivity : AppCompatActivity() {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
         }
+        //setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         val signUp: TextView = findViewById(R.id.sign_up)
         signUp.setOnClickListener {
             val intent = Intent(this, SignUpActivity::class.java)
@@ -36,9 +38,9 @@ class MainActivity : AppCompatActivity() {
 
         signIn.setOnClickListener {
             if (name.text.isEmpty()) {
-                Toast.makeText(this, "Provide your name!", Toast.LENGTH_LONG).show()
+                Toast.makeText(this, "Введите имя!", Toast.LENGTH_LONG).show()
             } else if (password.text.isEmpty()) {
-                Toast.makeText(this, "Invalid password!", Toast.LENGTH_LONG).show()
+                Toast.makeText(this, "Неверный пароль!", Toast.LENGTH_LONG).show()
             } else {
                 val db = Firebase.firestore
                 db.collection("users").get().addOnSuccessListener { result ->
@@ -57,13 +59,13 @@ class MainActivity : AppCompatActivity() {
                         } else if (document.getString("name") == name.text.toString()
                             && document.getString("password") != password.text.toString()
                         ) {
-                            Toast.makeText(this, "Incorrect password", Toast.LENGTH_LONG).show()
+                            Toast.makeText(this, "Неверный пароль!", Toast.LENGTH_LONG).show()
                             return@addOnSuccessListener;
                         }
                     }
-                    Toast.makeText(this, "This user does not exist!", Toast.LENGTH_LONG).show()
+                    Toast.makeText(this, "Этого пользователя не существует", Toast.LENGTH_LONG).show()
                 }.addOnFailureListener {
-                    Toast.makeText(this, "Something went wrong!", Toast.LENGTH_LONG).show()
+                    Toast.makeText(this, "Что-то пошло не так", Toast.LENGTH_LONG).show()
                 }
             }
         }

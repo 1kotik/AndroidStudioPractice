@@ -1,6 +1,8 @@
 package com.example.movies.activity
 
 import android.content.Intent
+import android.content.pm.ActivityInfo
+import android.content.res.Configuration
 import android.os.Bundle
 import android.widget.TextView
 import androidx.activity.enableEdgeToEdge
@@ -20,6 +22,7 @@ class MainMenuActivity : AppCompatActivity() {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
         }
+        //setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         val user: User? =intent.getParcelableExtra("user")
         val play: TextView = findViewById(R.id.play)
         play.setOnClickListener {
@@ -41,4 +44,5 @@ class MainMenuActivity : AppCompatActivity() {
             startActivity(intent)
         }
     }
+
 }

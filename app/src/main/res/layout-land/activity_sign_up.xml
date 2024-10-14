@@ -6,15 +6,14 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#F8BBD0"
-    tools:context=".activity.MainActivity">
+    tools:context=".activity.SignUpActivity">
 
     <LinearLayout
-        android:layout_width="227dp"
-        android:layout_height="424dp"
+        android:layout_width="262dp"
+        android:layout_height="293dp"
         android:layout_marginStart="92dp"
-        android:layout_marginTop="120dp"
+        android:layout_marginTop="10dp"
         android:layout_marginEnd="92dp"
-        android:layout_marginBottom="187dp"
         android:orientation="vertical"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -25,10 +24,10 @@
             android:id="@+id/title"
             android:layout_width="match_parent"
             android:layout_height="45dp"
-            android:fontFamily="@font/alata"
-            android:text="Truth or Lie"
+            android:fontFamily="sans-serif-medium"
+            android:text="Правда или ложь"
             android:textAlignment="center"
-            android:textSize="34sp" />
+            android:textSize="24sp" />
 
         <EditText
             android:id="@+id/name"
@@ -36,8 +35,8 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
             android:ems="10"
-            android:fontFamily="@font/alata"
-            android:hint="Name"
+            android:fontFamily="sans-serif-medium"
+            android:hint="Имя"
             android:inputType="text"
             android:minHeight="48dp" />
 
@@ -47,30 +46,30 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
             android:ems="10"
-            android:fontFamily="@font/alata"
-            android:hint="Password"
+            android:fontFamily="sans-serif-medium"
+            android:hint="Пароль"
             android:inputType="text"
             android:minHeight="48dp" />
 
         <Button
-            android:id="@+id/sign_in"
+            android:id="@+id/sign_up"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="10dp"
             android:layout_marginTop="20dp"
             android:layout_marginRight="10dp"
-            android:fontFamily="@font/alata"
-            android:text="Sign In"
-            android:textSize="24sp" />
+            android:fontFamily="sans-serif-medium"
+            android:text="Зарегистрироваться"
+            android:textSize="16sp" />
 
         <TextView
-            android:id="@+id/sign_up"
+            android:id="@+id/sign_in"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="10dp"
             android:layout_marginRight="10dp"
-            android:fontFamily="@font/alata"
-            android:text="First time? Sign up"
+            android:fontFamily="sans-serif-medium"
+            android:text="Войти"
             android:textAlignment="center" />
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

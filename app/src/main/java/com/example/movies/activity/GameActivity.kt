@@ -4,14 +4,15 @@ import android.app.Activity
 import android.app.AlertDialog
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.GestureDetector
 import android.view.MotionEvent
-import android.view.View
 import android.widget.Button
 import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.PackageManagerCompat.LOG_TAG
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import com.example.movies.R
@@ -31,7 +32,6 @@ fun setQuestions(): ArrayList<Question> {
         "Помидоры - это фрукты",
         "Клеопатра была египетского происхождения",
         "Бананы - это ягоды",
-        "Если сложить вместе два числа на противоположных сторонах игральной кости, ответ всегда будет 7",
         "Coca-Cola существует во всех странах мира",
         "Курица может жить без головы еще долго после того, как ее отрубили",
         "ДНК людей на 95 процентов совпадает с бананами",
@@ -44,9 +44,9 @@ fun setQuestions(): ArrayList<Question> {
         "Крокодилы глотают камни, чтобы глубже нырнуть"
     )
     val answers = arrayOf(
-        false, false, true, true, false, true, true,
+        false, false, true, true, false, true,
         false, true, false, true, false, true, true,
-        true, true,true
+        true, true, true
     )
     for (i in lines.indices) {
         questions.add(Question(lines[i], answers[i]))
@@ -55,15 +55,13 @@ fun setQuestions(): ArrayList<Question> {
 }
 
 
-
-
 class GameActivity : AppCompatActivity(), GestureDetector.OnGestureListener {
     lateinit var gestureDetector: GestureDetector
     var x1: Float = 0.0f
     var x2: Float = 0.0f
     var y1: Float = 0.0f
     var y2: Float = 0.0f
-    private val questions = setQuestions()
+    private var questions = setQuestions()
     private lateinit var question: Question
     private lateinit var user: User
 
@@ -80,15 +78,16 @@ class GameActivity : AppCompatActivity(), GestureDetector.OnGestureListener {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
         }
-
+        //setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         gestureDetector = GestureDetector(this, this)
+        if (getScore() == 0) {
+            val fetchedUser: User? = intent.getParcelableExtra("user")
+            if (fetchedUser != null) {
+                user = fetchedUser
+            }
 
-        val fetchedUser: User? = intent.getParcelableExtra("user")
-        if (fetchedUser != null) {
-            user = fetchedUser
+            setRandomQuestion()
         }
-
-        setRandomQuestion()
 
         val quit: Button = findViewById(R.id.exit)
 
@@ -148,15 +147,24 @@ class GameActivity : AppCompatActivity(), GestureDetector.OnGestureListener {
     }
 
     override fun onLongPress(p0: MotionEvent) {
-        val lives = findViewById<TextView>(R.id.lives)
-        var value = lives.text.toString().substring(lives.text.length - 1).toInt()
-        if (value == 0) {
-            Toast.makeText(this, "You have no lives left!", Toast.LENGTH_SHORT).show()
+        if (getLives() == 0) {
+            Toast.makeText(this, "У тебя не осталось жизней", Toast.LENGTH_SHORT).show()
         } else {
-            value--;
+            questions.remove(question)
             setRandomQuestion()
-            lives.text = "Lives: " + value.toString()
+            setLives(getLives() - 1)
+            changeScore(false)
         }
+    }
+
+    private fun getLives(): Int {
+        val lives = findViewById<TextView>(R.id.lives)
+        return lives.text.toString().substring(lives.text.length - 1).toInt()
+    }
+
+    private fun setLives(value: Int) {
+        val lives = findViewById<TextView>(R.id.lives)
+        lives.text = "Жизни: " + value.toString()
     }
 
     override fun onFling(p0: MotionEvent?, p1: MotionEvent, p2: Float, p3: Float): Boolean {
@@ -165,9 +173,13 @@ class GameActivity : AppCompatActivity(), GestureDetector.OnGestureListener {
 
 
     private fun setRandomQuestion() {
-        question = questions[(0..<questions.size).random()]
-        val questionView: TextView = findViewById(R.id.question)
-        questionView.text = question.line
+        if (questions.isNotEmpty()) {
+            question = questions[(0..<questions.size).random()]
+            val questionView: TextView = findViewById(R.id.question)
+            questionView.text = question.line
+        } else {
+            createWinDialog(this)
+        }
     }
 
     private fun getScore(): Int {
@@ -175,9 +187,13 @@ class GameActivity : AppCompatActivity(), GestureDetector.OnGestureListener {
         return score.text.toString().toInt()
     }
 
-    private fun increaseScore() {
+    private fun changeScore(increase: Boolean) {
         val score: TextView = findViewById(R.id.score)
-        score.text = (getScore() + 1).toString()
+        if (increase) {
+            score.text = (getScore() + 1).toString()
+        } else {
+            score.text = (getScore() - 1).toString()
+        }
         if (user.record < getScore()) {
             user.record = getScore()
         }
@@ -197,26 +213,35 @@ class GameActivity : AppCompatActivity(), GestureDetector.OnGestureListener {
     }
 
     private fun playerAnswered(answer: Boolean) {
+        questions.remove(question)
         if (answer == question.answer) {
             setRandomQuestion()
-            increaseScore()
-            Toast.makeText(this, "Right!", Toast.LENGTH_SHORT).show()
+            changeScore(true)
+            Toast.makeText(this, "Верно!", Toast.LENGTH_SHORT).show()
+        } else if (getLives() != 0) {
+//            setLives(getLives()-1)
+//            setRandomQuestion()
+//            Toast.makeText(this, "Неверно!", Toast.LENGTH_SHORT).show()
+            createLoseDialog(this)
         } else {
             if (user.record.toString().toInt() < getScore()) {
                 updateUser()
             }
-            createDialog(this)
+            createLoseDialog(this)
         }
     }
 
-    private fun createDialog(activity: Activity?) {
+    private fun createLoseDialog(activity: Activity?) {
         val builder: AlertDialog.Builder = AlertDialog.Builder(activity)
-        builder.setTitle("You lost!").setPositiveButton("Retry") { _, _ ->
+        builder.setTitle("Вы проиграли!").setPositiveButton("Еще раз") { _, _ ->
             val score: TextView = findViewById(R.id.score)
             score.text = "0"
+            setLives(3)
+            questions.clear()
+            questions = setQuestions()
             setRandomQuestion()
         }
-            .setNegativeButton("Quit") { _, _ ->
+            .setNegativeButton("Выйти") { _, _ ->
                 val intent = Intent(this, MainMenuActivity::class.java)
                 intent.putExtra("user", user)
                 startActivity(intent)
@@ -224,6 +249,45 @@ class GameActivity : AppCompatActivity(), GestureDetector.OnGestureListener {
         builder.create().show()
     }
 
+    private fun createWinDialog(activity: Activity?) {
+        val builder: AlertDialog.Builder = AlertDialog.Builder(activity)
+        builder.setTitle("Вопросов больше не осталось. Вы выиграли!")
+            .setPositiveButton("Еще раз") { _, _ ->
+                val score: TextView = findViewById(R.id.score)
+                score.text = "0"
+                setLives(3)
+                questions.clear()
+                questions = setQuestions()
+                setRandomQuestion()
+            }
+            .setNegativeButton("Выйти") { _, _ ->
+                val intent = Intent(this, MainMenuActivity::class.java)
+                intent.putExtra("user", user)
+                startActivity(intent)
+            }
+        builder.create().show()
+    }
+
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+        outState.putInt("score", getScore())
+        outState.putInt("lives", getLives())
+        outState.putParcelable("user", user)
+        outState.putParcelableArrayList("questions", questions)
+        outState.putParcelable("question", question)
+    }
+
+    override fun onRestoreInstanceState(savedInstanceState: Bundle) {
+        super.onRestoreInstanceState(savedInstanceState)
+        val score: TextView = findViewById(R.id.score)
+        val questionText: TextView = findViewById(R.id.question)
+        questions = savedInstanceState.getParcelableArrayList("questions")!!
+        question = savedInstanceState.getParcelable("question")!!
+        questionText.text = question.line
+        user = savedInstanceState.getParcelable("user")!!
+        setLives(savedInstanceState.getInt("lives"))
+        score.text = savedInstanceState.getInt("score").toString()
+    }
 
 }
 

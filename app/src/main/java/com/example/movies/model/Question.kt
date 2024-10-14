@@ -1,10 +1,14 @@
 package com.example.movies.model
 
-class Question {
-    var line: String
-    var answer: Boolean
+import android.os.Parcelable
+import kotlinx.parcelize.Parcelize
 
-    constructor(_line: String, _answer: Boolean){
+@Parcelize
+class Question() : Parcelable {
+    lateinit var line: String
+    var answer: Boolean = false
+
+    constructor(_line: String, _answer: Boolean) : this() {
         line = _line
         answer = _answer
     }
