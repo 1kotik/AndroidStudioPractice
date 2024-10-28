@@ -30,8 +30,6 @@ class SignUpActivity : AppCompatActivity() {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
         }
-        //setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
-        //var sp=getSharedPreferences("PC", Context.MODE_PRIVATE).edit()
         val signIn: TextView = findViewById(R.id.sign_in)
         signIn.setOnClickListener {
             val intent = Intent(this, MainActivity::class.java)

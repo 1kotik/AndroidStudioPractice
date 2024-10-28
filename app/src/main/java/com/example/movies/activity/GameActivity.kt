@@ -23,36 +23,7 @@ import com.google.firebase.firestore.firestore
 import kotlin.math.abs
 
 
-fun setQuestions(): ArrayList<Question> {
-    val questions = ArrayList<Question>()
-    val lines = arrayOf(
-        "Мельбурн — столица Австралии",
-        "Череп – самая крепкая кость в человеческом теле",
-        "Google изначально назывался BackRub",
-        "Помидоры - это фрукты",
-        "Клеопатра была египетского происхождения",
-        "Бананы - это ягоды",
-        "Coca-Cola существует во всех странах мира",
-        "Курица может жить без головы еще долго после того, как ее отрубили",
-        "ДНК людей на 95 процентов совпадает с бананами",
-        "Жирафы говорят «му»",
-        "Все млекопитающие живут на суше",
-        "Кофе готовят из ягод",
-        "Животное с самым большим мозгом по отношению к телy - мyравей",
-        "Около 70 процентов живых сyществ Земли - бактерии",
-        "У улитки около 25 000 зубов",
-        "Крокодилы глотают камни, чтобы глубже нырнуть"
-    )
-    val answers = arrayOf(
-        false, false, true, true, false, true,
-        false, true, false, true, false, true, true,
-        true, true, true
-    )
-    for (i in lines.indices) {
-        questions.add(Question(lines[i], answers[i]))
-    }
-    return questions
-}
+
 
 
 class GameActivity : AppCompatActivity(), GestureDetector.OnGestureListener {
@@ -67,6 +38,9 @@ class GameActivity : AppCompatActivity(), GestureDetector.OnGestureListener {
 
     companion object {
         const val MIN_DISTANCE = 150
+        init {
+            System.loadLibrary("movies")
+        }
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -156,6 +130,36 @@ class GameActivity : AppCompatActivity(), GestureDetector.OnGestureListener {
             changeScore(false)
         }
     }
+//    private fun setQuestions(): ArrayList<Question> {
+//        val questions = ArrayList<Question>()
+//        val lines = arrayOf(
+//            "Мельбурн — столица Австралии",
+//            "Череп – самая крепкая кость в человеческом теле",
+//            "Google изначально назывался BackRub",
+//            "Помидоры - это фрукты",
+//            "Клеопатра была египетского происхождения",
+//            "Бананы - это ягоды",
+//            "Coca-Cola существует во всех странах мира",
+//            "Курица может жить без головы еще долго после того, как ее отрубили",
+//            "ДНК людей на 95 процентов совпадает с бананами",
+//            "Жирафы говорят «му»",
+//            "Все млекопитающие живут на суше",
+//            "Кофе готовят из ягод",
+//            "Животное с самым большим мозгом по отношению к телy - мyравей",
+//            "Около 70 процентов живых сyществ Земли - бактерии",
+//            "У улитки около 25 000 зубов",
+//            "Крокодилы глотают камни, чтобы глубже нырнуть"
+//        )
+//        val answers = arrayOf(
+//            false, false, true, true, false, true,
+//            false, true, false, true, false, true, true,
+//            true, true, true
+//        )
+//        for (i in lines.indices) {
+//            questions.add(Question(lines[i], answers[i]))
+//        }
+//        return questions
+//    }
 
     private fun getLives(): Int {
         val lives = findViewById<TextView>(R.id.lives)
@@ -288,6 +292,6 @@ class GameActivity : AppCompatActivity(), GestureDetector.OnGestureListener {
         setLives(savedInstanceState.getInt("lives"))
         score.text = savedInstanceState.getInt("score").toString()
     }
-
+    private external fun setQuestions(): ArrayList<Question>
 }
 
